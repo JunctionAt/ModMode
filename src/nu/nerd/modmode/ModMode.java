@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class ModMode extends JavaPlugin {
@@ -121,23 +122,23 @@ public class ModMode extends JavaPlugin {
         if (!toggle) {
             displayName = player.getDisplayName();
             name = displayName;
-            if (usingbperms) {
-                List<org.bukkit.World> worlds = getServer().getWorlds();
-                for (org.bukkit.World world : worlds) {
+            //if (usingbperms) {
+                //List<org.bukkit.World> worlds = getServer().getWorlds();
+                //for (org.bukkit.World world : worlds) {
                     //ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);					//Remove the player from modmode group
                     //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));	//Get group list 
                     //TODO
                     //if (!groups.contains(bPermsModGroup)) {
                     //    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Add mod group (or something)
                     //}
-                	PermissionsEx.getUser(name).removeGroup(permsExModModeGroup);
-                }
-            }
+            PermissionsEx.getUser(name).removeGroup(permsExModModeGroup);
+                //}
+            //}
             player.sendMessage(ChatColor.RED + "You are no longer in ModMode!");
         } else {
-            if (usingbperms) {
-                List<org.bukkit.World> worlds = getServer().getWorlds();
-                for (org.bukkit.World world : worlds) {
+            //if (usingbperms) {
+                //List<org.bukkit.World> worlds = getServer().getWorlds();
+                //for (org.bukkit.World world : worlds) {
                     //ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);					//Add player to the modmode group
                     
                     //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));	//Get group list
@@ -146,9 +147,9 @@ public class ModMode extends JavaPlugin {
                     //    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Remove mod group (or something)
                     //}
                 	
-                	PermissionsEx.getUser(name).addGroup(permsExModModeGroup);
-                }
-            }
+            PermissionsEx.getUser(name).addGroup(permsExModModeGroup);
+                //}
+            //}
             player.sendMessage(ChatColor.RED + "You are now in ModMode!");
         }
 
@@ -290,8 +291,12 @@ public class ModMode extends JavaPlugin {
         fullvanished = getConfig().getStringList("fullvanished");
         modmode = getConfig().getStringList("modmode");
         allowFlight = getConfig().getBoolean("allow.flight", true);
-        permsExModGroup = getConfig().getString("permsex.modgroup", "mod");
         permsExModModeGroup = getConfig().getString("permsex.modmodegroup", "modmode");
+        
+        PermissionUser[] modmoders = PermissionsEx.getPermissionManager().getUsers(permsExModModeGroup);
+        for (PermissionUser user : modmoders) {
+        	user.removeGroup(permsExModModeGroup);
+        }
         
         //if (usingbperms) {
             //de.bananaco.bpermissions.imp.Permissions bPermsPlugin = null;
