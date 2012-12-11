@@ -314,8 +314,8 @@ public class ModMode extends JavaPlugin {
         getConfig().set("modmode", modmode);
         getConfig().set("allow.flight", allowFlight);
         getConfig().set("bperms.enabled", usingbperms);
-        getConfig().set("bperms.modgroup", bPermsModGroup);
-        getConfig().set("bperms.modmodegroup", bPermsModModeGroup);
+        getConfig().set("bperms.modgroup", permsExModGroup);
+        getConfig().set("bperms.modmodegroup", permsExModModeGroup);
         saveConfig();
     }
 
