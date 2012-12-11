@@ -118,10 +118,10 @@ public class ModMode extends JavaPlugin {
 
     public void toggleModMode(final Player player, boolean toggle, boolean onJoin) {
         String displayName = player.getName();
-        String name = ChatColor.GREEN + player.getDisplayName() + ChatColor.WHITE;
+        //String name = ChatColor.GREEN + player.getDisplayName() + ChatColor.WHITE;
         if (!toggle) {
             displayName = player.getDisplayName();
-            name = displayName;
+            //name = displayName;
             //if (usingbperms) {
                 //List<org.bukkit.World> worlds = getServer().getWorlds();
                 //for (org.bukkit.World world : worlds) {
@@ -131,7 +131,7 @@ public class ModMode extends JavaPlugin {
                     //if (!groups.contains(bPermsModGroup)) {
                     //    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Add mod group (or something)
                     //}
-            PermissionsEx.getUser(name).removeGroup(permsExModModeGroup);
+            PermissionsEx.getUser(displayName).removeGroup(permsExModModeGroup);
                 //}
             //}
             player.sendMessage(ChatColor.RED + "You are no longer in ModMode!");
