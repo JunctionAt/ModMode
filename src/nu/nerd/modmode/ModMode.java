@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import net.minecraft.server.v1_4_5.*;
-import net.minecraft.server.v1_4_5.EntityPlayer;
-import net.minecraft.server.v1_4_5.MinecraftServer;
-import net.minecraft.server.v1_4_5.Packet3Chat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,6 +18,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
 public class ModMode extends JavaPlugin {
 
 	
@@ -30,8 +29,8 @@ public class ModMode extends JavaPlugin {
     public List<String> modmode;
     public boolean allowFlight;
     public boolean usingbperms;
-    public String bPermsModGroup;
-    public String bPermsModModeGroup;
+    public String permsExModGroup;
+    public String permsExModModeGroup;
 
     public boolean isInvisible(Player player) {
         return vanished.contains(player.getName()) || fullvanished.contains(player.getName());
@@ -125,12 +124,13 @@ public class ModMode extends JavaPlugin {
             if (usingbperms) {
                 List<org.bukkit.World> worlds = getServer().getWorlds();
                 for (org.bukkit.World world : worlds) {
-                    //ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
-                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
+                    //ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);					//Remove the player from modmode group
+                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));	//Get group list 
                     //TODO
                     //if (!groups.contains(bPermsModGroup)) {
-                    //    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
+                    //    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Add mod group (or something)
                     //}
+                	PermissionsEx.getUser(name).removeGroup(permsExModModeGroup);
                 }
             }
             player.sendMessage(ChatColor.RED + "You are no longer in ModMode!");
@@ -138,13 +138,15 @@ public class ModMode extends JavaPlugin {
             if (usingbperms) {
                 List<org.bukkit.World> worlds = getServer().getWorlds();
                 for (org.bukkit.World world : worlds) {
-                    //ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
+                    //ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);					//Add player to the modmode group
                     
-                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
+                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));	//Get group list
                     //TODO
                     //if (groups.contains(bPermsModGroup)) {
-                    //    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
+                    //    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Remove mod group (or something)
                     //}
+                	
+                	PermissionsEx.getUser(name).addGroup(permsExModModeGroup);
                 }
             }
             player.sendMessage(ChatColor.RED + "You are now in ModMode!");
@@ -288,11 +290,10 @@ public class ModMode extends JavaPlugin {
         fullvanished = getConfig().getStringList("fullvanished");
         modmode = getConfig().getStringList("modmode");
         allowFlight = getConfig().getBoolean("allow.flight", true);
-        usingbperms = getConfig().getBoolean("bperms.enabled", false);
-        bPermsModGroup = getConfig().getString("bperms.modgroup", "Moderators");
-        bPermsModModeGroup = getConfig().getString("bperms.modmodegroup", "ModMode");
+        permsExModGroup = getConfig().getString("permsex.modgroup", "mod");
+        permsExModModeGroup = getConfig().getString("permsex.modmodegroup", "modmode");
         
-        if (usingbperms) {
+        //if (usingbperms) {
             //de.bananaco.bpermissions.imp.Permissions bPermsPlugin = null;
             //TODO
             //bPermsPlugin = (de.bananaco.bpermissions.imp.Permissions)getServer().getPluginManager().getPlugin("bPermissions");
@@ -303,7 +304,7 @@ public class ModMode extends JavaPlugin {
             //    getLogger().log(Level.INFO, "bperms turned on, but plugin could not be loaded.");
             //    getPluginLoader().disablePlugin(this);
             //}
-        }
+        //}
     }
 
     @Override
