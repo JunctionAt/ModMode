@@ -147,7 +147,7 @@ public class ModMode extends JavaPlugin {
                     //    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);					//Remove mod group (or something)
                     //}
                 	
-            PermissionsEx.getUser(name).addGroup(permsExModModeGroup);
+            PermissionsEx.getUser(displayName).addGroup(permsExModModeGroup);
                 //}
             //}
             player.sendMessage(ChatColor.RED + "You are now in ModMode!");
