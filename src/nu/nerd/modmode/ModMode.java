@@ -168,7 +168,7 @@ public class ModMode extends JavaPlugin {
 
         //save with the old name, change it, then load with the new name
         server.getServerConfigurationManager().playerFileData.save(entityplayer);
-        entityplayer.name = name;
+        entityplayer.name = displayName;
         entityplayer.displayName = displayName;
         server.getServerConfigurationManager().playerFileData.load(entityplayer);
 
