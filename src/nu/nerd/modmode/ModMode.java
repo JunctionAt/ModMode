@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-import net.minecraft.server.*;
+import net.minecraft.server.v1_4_5.*;
+import net.minecraft.server.v1_4_5.EntityPlayer;
+import net.minecraft.server.v1_4_5.MinecraftServer;
+import net.minecraft.server.v1_4_5.Packet3Chat;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -121,12 +125,12 @@ public class ModMode extends JavaPlugin {
             if (usingbperms) {
                 List<org.bukkit.World> worlds = getServer().getWorlds();
                 for (org.bukkit.World world : worlds) {
-                    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
-                    List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
-                    
-                    if (!groups.contains(bPermsModGroup)) {
-                        ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
-                    }
+                    //ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
+                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
+                    //TODO
+                    //if (!groups.contains(bPermsModGroup)) {
+                    //    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
+                    //}
                 }
             }
             player.sendMessage(ChatColor.RED + "You are no longer in ModMode!");
@@ -134,13 +138,13 @@ public class ModMode extends JavaPlugin {
             if (usingbperms) {
                 List<org.bukkit.World> worlds = getServer().getWorlds();
                 for (org.bukkit.World world : worlds) {
-                    ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
+                    //ApiLayer.addGroup(world.getName(), CalculableType.USER, name, bPermsModModeGroup);
                     
-                    List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
-                    
-                    if (groups.contains(bPermsModGroup)) {
-                        ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
-                    }
+                    //List<String> groups = Arrays.asList(ApiLayer.getGroups(world.getName(), CalculableType.USER, name));
+                    //TODO
+                    //if (groups.contains(bPermsModGroup)) {
+                    //    ApiLayer.removeGroup(world.getName(), CalculableType.USER, name, bPermsModGroup);
+                    //}
                 }
             }
             player.sendMessage(ChatColor.RED + "You are now in ModMode!");
@@ -289,16 +293,16 @@ public class ModMode extends JavaPlugin {
         bPermsModModeGroup = getConfig().getString("bperms.modmodegroup", "ModMode");
         
         if (usingbperms) {
-            de.bananaco.bpermissions.imp.Permissions bPermsPlugin = null;
-            
-            bPermsPlugin = (de.bananaco.bpermissions.imp.Permissions)getServer().getPluginManager().getPlugin("bPermissions");
-            if (bPermsPlugin == null || !(bPermsPlugin instanceof de.bananaco.bpermissions.imp.Permissions)) {
-                if (!bPermsPlugin.isEnabled()) {
-                    getPluginLoader().enablePlugin(bPermsPlugin);
-                }
-                getLogger().log(Level.INFO, "bperms turned on, but plugin could not be loaded.");
-                getPluginLoader().disablePlugin(this);
-            }
+            //de.bananaco.bpermissions.imp.Permissions bPermsPlugin = null;
+            //TODO
+            //bPermsPlugin = (de.bananaco.bpermissions.imp.Permissions)getServer().getPluginManager().getPlugin("bPermissions");
+            //if (bPermsPlugin == null || !(bPermsPlugin instanceof de.bananaco.bpermissions.imp.Permissions)) {
+            //    if (!bPermsPlugin.isEnabled()) {
+            //        getPluginLoader().enablePlugin(bPermsPlugin);
+            //    }
+            //    getLogger().log(Level.INFO, "bperms turned on, but plugin could not be loaded.");
+            //    getPluginLoader().disablePlugin(this);
+            //}
         }
     }
 
